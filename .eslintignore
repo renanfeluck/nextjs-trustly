@@ -1,0 +1,9 @@
+**/node_modules/*
+**/out/*
+**/.next/*
+src/**/*.test*
+src/gql/**
+src/propTypes/**
+src/static/svg/**
+src/types/**
+src/components/svg/**
