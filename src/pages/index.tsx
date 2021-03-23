@@ -2,7 +2,8 @@ import Header from '@app/Header';
 import ProductCard from '@app/ProductCard';
 import SearchInput from '@app/SearchInput';
 import Container from '@design/Container';
-import { GetStaticPropsResult, InferGetStaticPropsType } from 'next';
+import { GetStaticPropsResult } from 'next';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { ProductInfo } from 'types/product';
 
@@ -39,17 +40,33 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<HomeData>> 
 }
 
 export default function Home({ productsResults }: HomeData): JSX.Element {
+  const [productList, setProductList] = useState(productsResults);
+
+  const [searchValue, setSearchValue] = useState('');
+
+  const filterSearch = event => {
+    const { value } = event.target;
+
+    setSearchValue(value);
+
+    const filtredList = productsResults.filter(
+      product => product.description.toUpperCase().indexOf(value.toUpperCase()) >= 0
+    );
+
+    setProductList(filtredList);
+  };
+
   return (
     <div>
       <Header />
       <Container>
         <SearchBox>
-          <SearchInput />
+          <SearchInput value={searchValue} onChange={filterSearch} />
         </SearchBox>
 
         <ProductBox>
-          {productsResults &&
-            productsResults.map((product: ProductInfo) => (
+          {productList &&
+            productList.map((product: ProductInfo) => (
               <ProductItem key={product.id}>
                 <ProductCard product={product} />
               </ProductItem>

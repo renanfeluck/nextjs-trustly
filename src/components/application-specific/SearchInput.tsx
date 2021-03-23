@@ -34,11 +34,11 @@ const SearchBox = styled.div`
   padding-bottom: 12px;
 `;
 
-const SearchInput = (): JSX.Element => {
+const SearchInput = ({ value, onChange }): JSX.Element => {
   return (
     <SearchBox>
       <SearchImage />
-      <StyledInput placeholder="Search for your sneaker" />
+      <StyledInput placeholder="Search for your sneaker" value={value} onChange={onChange} />
     </SearchBox>
   );
 };
