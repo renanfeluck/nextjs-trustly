@@ -4,8 +4,10 @@ import Container from '@design/Container';
 import styled from 'styled-components';
 import Image from 'next/image';
 import CheckoutPaymentButton from '@app/CheckoutPaymentButton';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '@design/Button';
+import { Head } from 'next/document';
+import loadPayWithMyBank from '@helpers/loadPayWithMyBank';
 
 const CheckoutView = styled.div`
   display: flex;
@@ -75,6 +77,10 @@ const PaymentBox = styled.div`
 const Checkout = (): JSX.Element => {
   const [paymentMethod, setPaymentMethod] = useState('bank');
 
+  const pay = e => {
+    e.preventDefault();
+    loadPayWithMyBank();
+  };
   return (
     <>
       <Header />
@@ -146,7 +152,7 @@ const Checkout = (): JSX.Element => {
                   />
                 </CheckoutPaymentButton>
 
-                <Button> Continue </Button>
+                <Button onClick={pay}> Continue </Button>
               </form>
             </PaymentBox>
           </CheckoutDetails>
