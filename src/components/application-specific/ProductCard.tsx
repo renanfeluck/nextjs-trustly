@@ -45,9 +45,10 @@ const ButtonBox = styled.div`
 
 type ProductData = {
   product: ProductInfo;
+  onAddToCart: any;
 };
 
-const ProductCard = ({ product }: ProductData): JSX.Element => {
+const ProductCard = ({ product, onAddToCart }: ProductData): JSX.Element => {
   return (
     <CardBox>
       <Image src={product.thumbnailURL} alt="" width="297px" height="171px" />
@@ -73,7 +74,7 @@ const ProductCard = ({ product }: ProductData): JSX.Element => {
       </SelectBox>
       <ProductPrice> $ {product.price} </ProductPrice>
       <ButtonBox>
-        <Button> Add to cart </Button>
+        <Button onClick={onAddToCart}> Add to cart </Button>
       </ButtonBox>
     </CardBox>
   );

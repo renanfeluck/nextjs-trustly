@@ -67,7 +67,8 @@
         "ts": "never",
         "tsx": "never"
       }
-    ]
+    ],
+    "react/require-default-props": [{ "enabled": "off" }]
   },
   "settings": {
     "import/parsers": {

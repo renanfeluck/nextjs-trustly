@@ -3,6 +3,7 @@ import ProductCard from '@app/ProductCard';
 import SearchInput from '@app/SearchInput';
 import Container from '@design/Container';
 import { GetStaticPropsResult } from 'next';
+import { useRouter } from 'next/dist/client/router';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { ProductInfo } from 'types/product';
@@ -41,8 +42,9 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<HomeData>> 
 
 export default function Home({ productsResults }: HomeData): JSX.Element {
   const [productList, setProductList] = useState(productsResults);
-
   const [searchValue, setSearchValue] = useState('');
+
+  const router = useRouter();
 
   const filterSearch = event => {
     const { value } = event.target;
@@ -54,6 +56,12 @@ export default function Home({ productsResults }: HomeData): JSX.Element {
     );
 
     setProductList(filtredList);
+  };
+
+  const addToCart = (product: ProductInfo) => {
+    localStorage.setItem('cart', JSON.stringify(product));
+
+    router.push('/checkout');
   };
 
   return (
@@ -68,7 +76,7 @@ export default function Home({ productsResults }: HomeData): JSX.Element {
           {productList &&
             productList.map((product: ProductInfo) => (
               <ProductItem key={product.id}>
-                <ProductCard product={product} />
+                <ProductCard product={product} onAddToCart={() => addToCart(product)} />
               </ProductItem>
             ))}
         </ProductBox>

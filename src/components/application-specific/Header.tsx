@@ -1,5 +1,6 @@
 import Container from '@design/Container';
 import styled from 'styled-components';
+import Link from 'next/link';
 import ProfilePicture from './ProfilePicture';
 
 const StyledHeader = styled.div`
@@ -25,10 +26,24 @@ const HeaderContainer = styled(Container)`
   height: 87px;
 `;
 
-const Header = (): JSX.Element => {
+const BackLink = styled(Link)`
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 17.4025px;
+`;
+
+type HeaderProps = {
+  back?: boolean;
+};
+
+const Header = ({ back }: HeaderProps): JSX.Element => {
   return (
     <StyledHeader>
       <HeaderContainer>
+        {back && (
+          <BackLink href="/">
+            <a>Back</a>
+          </BackLink>
+        )}
         <Title> Sneakers </Title>
         <ProfilePicture src="/profile.png" />
       </HeaderContainer>

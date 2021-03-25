@@ -4,10 +4,11 @@ import Container from '@design/Container';
 import styled from 'styled-components';
 import Image from 'next/image';
 import CheckoutPaymentButton from '@app/CheckoutPaymentButton';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Button from '@design/Button';
 import { Head } from 'next/document';
 import loadPayWithMyBank from '@helpers/loadPayWithMyBank';
+import { ProductInfo } from 'types/product';
 
 const CheckoutView = styled.div`
   display: flex;
@@ -76,6 +77,21 @@ const PaymentBox = styled.div`
 
 const Checkout = (): JSX.Element => {
   const [paymentMethod, setPaymentMethod] = useState('bank');
+  const [cartInfo, setCartInfo] = useState<ProductInfo>();
+  const [imageUrl, setImageUrl] = useState();
+
+  useEffect(() => {
+    const localCartInfo = localStorage.getItem('cart');
+
+    if (localCartInfo) {
+      const parsedLocalCartInfo = JSON.parse(localCartInfo);
+
+      console.log(parsedLocalCartInfo);
+      setCartInfo(JSON.parse(localCartInfo));
+      setImageUrl(parsedLocalCartInfo.maxresURL);
+      // console.log(localCartInfo);
+    }
+  }, []);
 
   const pay = e => {
     e.preventDefault();
@@ -83,22 +99,18 @@ const Checkout = (): JSX.Element => {
   };
   return (
     <>
-      <Header />
+      <Header back />
       <Container>
         <Stepper />
         <CheckoutView>
           <CheckoutImage>
-            <Image
-              src="https://voliveira.s3-sa-east-1.amazonaws.com/sneakers/ss-sneaker-maxres.png"
-              layout="fill"
-              objectFit="cover"
-            />
+            {imageUrl && <Image src={imageUrl} layout="fill" objectFit="cover" />}
           </CheckoutImage>
           <CheckoutDetails>
             <CheckoutDetailsInfo>
               <CheckoutTitle>Cart total</CheckoutTitle>
 
-              <p>SS Sneaker</p>
+              <p>{cartInfo?.description}</p>
 
               <CheckoutGrayText>x 1 Green Size 41 Item #2839u512401</CheckoutGrayText>
             </CheckoutDetailsInfo>
