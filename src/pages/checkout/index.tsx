@@ -9,24 +9,27 @@ import Button from '@design/Button';
 import { Head } from 'next/document';
 import loadPayWithMyBank from '@helpers/loadPayWithMyBank';
 import { ProductInfo } from 'types/product';
-import CheckoutImage from '@app/Checkout/CheckoutImage';
+import CheckoutImage, { MobileCheckoutImage } from '@app/Checkout/CheckoutImage';
 import CheckoutDetails from '@app/Checkout/CheckoutDetais';
 import CheckoutDetailsInfo from '@app/Checkout/CheckoutDetaisInfo';
 import CheckoutView from '@app/Checkout/CheckoutView';
 import CheckoutTitle from '@app/Checkout/CheckoutTitle';
 import CheckoutGrayText from '@app/Checkout/CheckoutGrayText';
 import CheckoutPriceText from '@app/Checkout/CheckoutPriceText';
+import isMobile from '@helpers/isMobile';
 
 const PaymentBox = styled.div`
   width: 100%;
 `;
-
 const Checkout = (): JSX.Element => {
   const [paymentMethod, setPaymentMethod] = useState('bank');
   const [cartInfo, setCartInfo] = useState<ProductInfo>();
   const [imageUrl, setImageUrl] = useState();
+  const [mobile, setMobile] = useState(true);
 
   useEffect(() => {
+    setMobile(isMobile());
+
     const localCartInfo = localStorage.getItem('cart');
 
     if (localCartInfo) {
@@ -43,29 +46,45 @@ const Checkout = (): JSX.Element => {
     loadPayWithMyBank();
   };
 
+  const DeliveryDetails = () => (
+    <>
+      <CheckoutTitle>Delivery details</CheckoutTitle>
+
+      <CheckoutGrayText>
+        John Smith Phone no: 01312428200 Address: Redwood City, 2000.
+      </CheckoutGrayText>
+    </>
+  );
+
   return (
     <>
       <Header back />
       <Container>
-        <Stepper />
+        {!mobile && <Stepper step={2} />}
         <CheckoutView>
-          <CheckoutImage>
-            {imageUrl && <Image src={imageUrl} layout="fill" objectFit="cover" />}
-          </CheckoutImage>
+          {!mobile && (
+            <CheckoutImage>
+              {imageUrl && <Image src={imageUrl} layout="fill" objectFit="cover" />}
+            </CheckoutImage>
+          )}
           <CheckoutDetails>
+            {mobile && (
+              <div>
+                <MobileCheckoutImage>
+                  {imageUrl && <Image src={imageUrl} layout="fill" objectFit="cover" />}
+                </MobileCheckoutImage>
+              </div>
+            )}
             <CheckoutDetailsInfo>
-              <CheckoutTitle>Cart total</CheckoutTitle>
-
+              {!mobile && <CheckoutTitle>Cart total</CheckoutTitle>}
               <p>{cartInfo?.description}</p>
-
               <CheckoutGrayText>x 1 Green Size 41 Item #2839u512401</CheckoutGrayText>
-            </CheckoutDetailsInfo>
-            <CheckoutDetailsInfo>
-              <CheckoutTitle>Delivery details</CheckoutTitle>
 
-              <CheckoutGrayText>
-                John Smith Phone no: 01312428200 Address: Redwood City, 2000.
-              </CheckoutGrayText>
+              {mobile && <DeliveryDetails />}
+            </CheckoutDetailsInfo>
+
+            <CheckoutDetailsInfo>
+              {!mobile && <DeliveryDetails />}
               <CheckoutDetails>
                 <div>
                   <p>Total cost</p>
@@ -75,6 +94,7 @@ const Checkout = (): JSX.Element => {
                 <CheckoutPriceText>$100</CheckoutPriceText>
               </CheckoutDetails>
             </CheckoutDetailsInfo>
+
             <PaymentBox>
               <CheckoutTitle> Select your payment method </CheckoutTitle>
               <form>

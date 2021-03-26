@@ -16,6 +16,7 @@ const loadPayWithMyBank = callback => {
         if (command === 'event' && event.type === 'new_location') {
           if (event.data.indexOf('#success') === 0) {
             alert('success!');
+            window.location.href = '/confirmation';
           } else {
             alert('cancel!');
           }

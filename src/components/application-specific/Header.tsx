@@ -21,6 +21,12 @@ const Title = styled.span`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+
+  display: none;
+
+  @media screen and (min-width: 1024px) {
+    display: block;
+  }
 `;
 
 const HeaderContainer = styled(Container)`

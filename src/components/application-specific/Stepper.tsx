@@ -5,9 +5,13 @@ const Line = styled.div`
   width: 860px;
   height: 1px;
   position: relative;
-  display: flex;
+  display: none;
   justify-content: space-between;
   margin: 67px auto 0;
+
+  @media screen and (min-width: 1024px) {
+    display: flex;
+  }
 `;
 
 const Step = styled.div<{ active?: boolean }>`
@@ -38,7 +42,11 @@ const StepBox = styled.div<{ transform?: string }>`
   transform: translateX(${props => props.transform});
 `;
 
-const Stepper = (): JSX.Element => {
+type StepperPros = {
+  step: number;
+};
+
+const Stepper = ({ step }: StepperPros): JSX.Element => {
   return (
     <Line>
       <StepBox transform="-50%">
@@ -47,12 +55,12 @@ const Stepper = (): JSX.Element => {
       </StepBox>
 
       <StepBox>
-        <Step active />
+        <Step active={step >= 2} />
         <StepperText>Payment options</StepperText>
       </StepBox>
 
       <StepBox transform="50%">
-        <Step />
+        <Step active={step >= 3} />
         <StepperText>Recipt</StepperText>
       </StepBox>
     </Line>

@@ -19,8 +19,11 @@ const ProductBox = styled.div`
 `;
 
 const ProductItem = styled.div`
-  flex: 1 0 33%;
-  max-width: 33%;
+  @media screen and (min-width: 1024px) {
+    flex: 1 0 33%;
+    max-width: 33%;
+  }
+  flex: 1;
   margin-top: 66px;
 `;
 
