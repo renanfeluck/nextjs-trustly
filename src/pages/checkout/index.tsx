@@ -3,73 +3,19 @@ import Stepper from '@app/Stepper';
 import Container from '@design/Container';
 import styled from 'styled-components';
 import Image from 'next/image';
-import CheckoutPaymentButton from '@app/CheckoutPaymentButton';
+import CheckoutPaymentButton from '@app/Checkout/CheckoutPaymentButton';
 import { useEffect, useMemo, useState } from 'react';
 import Button from '@design/Button';
 import { Head } from 'next/document';
 import loadPayWithMyBank from '@helpers/loadPayWithMyBank';
 import { ProductInfo } from 'types/product';
-
-const CheckoutView = styled.div`
-  display: flex;
-  min-height: 630px;
-  width: 100%;
-  margin-top: 47px;
-`;
-
-const CheckoutImage = styled.div`
-  flex: 40%;
-  max-width: 40%;
-  border-radius: 10.8766px;
-  position: relative;
-  overflow: hidden;
-  margin-right: 38px;
-`;
-
-const CheckoutDetails = styled.div`
-  flex: 60%;
-  background: #f7f7f7;
-  border-radius: 10.8766px;
-  padding: 30px;
-  flex-direction: row;
-  display: flex;
-  flex-wrap: wrap;
-`;
-
-const CheckoutDetailsInfo = styled.div`
-  flex: 50%;
-  width: 50%;
-`;
-
-const CheckoutTitle = styled.p`
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 22px;
-  line-height: 30px;
-  color: #000000;
-`;
-
-const CheckoutGrayText = styled.p`
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 153.3%;
-  letter-spacing: 0.612903px;
-  color: #979797;
-`;
-
-const PriceText = styled.span`
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 43.5063px;
-  line-height: 44px;
-  color: #000000;
-  width: 50%;
-  text-align: right;
-`;
+import CheckoutImage from '@app/Checkout/CheckoutImage';
+import CheckoutDetails from '@app/Checkout/CheckoutDetais';
+import CheckoutDetailsInfo from '@app/Checkout/CheckoutDetaisInfo';
+import CheckoutView from '@app/Checkout/CheckoutView';
+import CheckoutTitle from '@app/Checkout/CheckoutTitle';
+import CheckoutGrayText from '@app/Checkout/CheckoutGrayText';
+import CheckoutPriceText from '@app/Checkout/CheckoutPriceText';
 
 const PaymentBox = styled.div`
   width: 100%;
@@ -89,7 +35,6 @@ const Checkout = (): JSX.Element => {
       console.log(parsedLocalCartInfo);
       setCartInfo(JSON.parse(localCartInfo));
       setImageUrl(parsedLocalCartInfo.maxresURL);
-      // console.log(localCartInfo);
     }
   }, []);
 
@@ -97,6 +42,7 @@ const Checkout = (): JSX.Element => {
     e.preventDefault();
     loadPayWithMyBank();
   };
+
   return (
     <>
       <Header back />
@@ -126,7 +72,7 @@ const Checkout = (): JSX.Element => {
                   <CheckoutGrayText>Delivery included</CheckoutGrayText>
                 </div>
 
-                <PriceText>$100</PriceText>
+                <CheckoutPriceText>$100</CheckoutPriceText>
               </CheckoutDetails>
             </CheckoutDetailsInfo>
             <PaymentBox>
