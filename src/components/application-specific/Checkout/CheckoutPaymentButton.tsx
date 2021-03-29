@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import styled from 'styled-components';
 
 const CheckboxLabel = styled.label`
@@ -32,7 +33,7 @@ const PaymentButtonBox = styled.div<{ checked?: boolean }>`
 `;
 
 type CheckoutPaymentButtonProps = {
-  children: JSX.Element;
+  children: ReactNode;
   checked: boolean;
 };
 
