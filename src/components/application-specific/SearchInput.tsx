@@ -34,7 +34,11 @@ const SearchBox = styled.div`
   padding-bottom: 12px;
 `;
 
-const SearchInput = ({ value, onChange }): JSX.Element => {
+type SearchInputProps = {
+  value: any;
+  onChange: any;
+};
+const SearchInput = ({ value, onChange }: SearchInputProps): JSX.Element => {
   return (
     <SearchBox>
       <SearchImage />

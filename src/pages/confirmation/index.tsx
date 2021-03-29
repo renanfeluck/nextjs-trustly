@@ -1,11 +1,11 @@
+/* eslint-disable no-alert */
 import Header from '@app/Header';
 import Stepper from '@app/Stepper';
 import Container from '@design/Container';
 import styled from 'styled-components';
 import Image from 'next/image';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '@design/Button';
-import loadPayWithMyBank from '@helpers/loadPayWithMyBank';
 import { ProductInfo } from 'types/product';
 import CheckoutImage, { MobileCheckoutImage } from '@app/Checkout/CheckoutImage';
 import CheckoutDetails from '@app/Checkout/CheckoutDetais';
@@ -16,7 +16,6 @@ import CheckoutGrayText from '@app/Checkout/CheckoutGrayText';
 import CheckoutPriceText from '@app/Checkout/CheckoutPriceText';
 import Bank from '@static/bank.svg';
 import { useRouter } from 'next/dist/client/router';
-import isMobile from '@helpers/isMobile';
 import HiddenMobile from '@design/HiddenMobile';
 import HiddenDesktop from '@design/HiddenDesktop';
 

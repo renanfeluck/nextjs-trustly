@@ -31,7 +31,12 @@ const PaymentButtonBox = styled.div<{ checked?: boolean }>`
   margin-bottom: 15px;
 `;
 
-const CheckoutPaymentButton = ({ children, checked }) => {
+type CheckoutPaymentButtonProps = {
+  children: JSX.Element;
+  checked: boolean;
+};
+
+const CheckoutPaymentButton = ({ children, checked }: CheckoutPaymentButtonProps): JSX.Element => {
   return (
     <PaymentButtonBox checked={checked}>
       <CheckboxLabel>{children}</CheckboxLabel>

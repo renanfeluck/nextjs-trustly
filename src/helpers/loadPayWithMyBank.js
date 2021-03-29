@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable no-alert */
+/* eslint-disable no-undef */
 const loadPayWithMyBank = callback => {
   const existingScript = document.getElementById('payWithMyBank');
   if (!existingScript) {
@@ -11,8 +14,7 @@ const loadPayWithMyBank = callback => {
 
       // eslint-disable-next-line func-names
       // eslint-disable-next-line consistent-return
-      PayWithMyBank.addPanelListener(function (command, event) {
-        console.log('event');
+      PayWithMyBank.addPanelListener((command, event) => {
         if (command === 'event' && event.type === 'new_location') {
           if (event.data.indexOf('#success') === 0) {
             alert('success!');

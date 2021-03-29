@@ -1,8 +1,8 @@
 import Container from '@design/Container';
 import styled from 'styled-components';
 import Link from 'next/link';
-import ProfilePicture from './ProfilePicture';
 import BackArrow from '@static/back-arrow.svg';
+import ProfilePicture from './ProfilePicture';
 
 const StyledHeader = styled.div`
   height: 87px;

@@ -10,7 +10,11 @@ const StyledProfilePicture = styled.img`
   transform: translateY(-50%);
 `;
 
-const ProfilePicture = ({ src }) => {
+type ProfilePicturePros = {
+  src: string;
+};
+
+const ProfilePicture = ({ src }: ProfilePicturePros): JSX.Element => {
   return <StyledProfilePicture src={src} />;
 };
 

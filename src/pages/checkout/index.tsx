@@ -1,12 +1,12 @@
+/* eslint-disable no-alert */
 import Header from '@app/Header';
 import Stepper from '@app/Stepper';
 import Container from '@design/Container';
 import styled from 'styled-components';
 import Image from 'next/image';
 import CheckoutPaymentButton from '@app/Checkout/CheckoutPaymentButton';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Button from '@design/Button';
-import { Head } from 'next/document';
 import loadPayWithMyBank from '@helpers/loadPayWithMyBank';
 import { ProductInfo } from 'types/product';
 import CheckoutImage, { MobileCheckoutImage } from '@app/Checkout/CheckoutImage';
@@ -34,7 +34,6 @@ const Checkout = (): JSX.Element => {
     if (localCartInfo) {
       const parsedLocalCartInfo = JSON.parse(localCartInfo);
 
-      console.log(parsedLocalCartInfo);
       setCartInfo(JSON.parse(localCartInfo));
       setImageUrl(parsedLocalCartInfo.maxresURL);
     }
