@@ -17,6 +17,8 @@ import CheckoutPriceText from '@app/Checkout/CheckoutPriceText';
 import Bank from '@static/bank.svg';
 import { useRouter } from 'next/dist/client/router';
 import isMobile from '@helpers/isMobile';
+import HiddenMobile from '@design/HiddenMobile';
+import HiddenDesktop from '@design/HiddenDesktop';
 
 const PlaceOrder = styled.div`
   width: 100%;
@@ -82,12 +84,10 @@ const DetailPaymentBox = styled.div`
 const Checkout = (): JSX.Element => {
   const [cartInfo, setCartInfo] = useState<ProductInfo>();
   const [imageUrl, setImageUrl] = useState();
-  const [mobile, setMobile] = useState(true);
 
   const router = useRouter();
 
   useEffect(() => {
-    setMobile(isMobile());
     const localCartInfo = localStorage.getItem('cart');
 
     if (localCartInfo) {
@@ -107,14 +107,16 @@ const Checkout = (): JSX.Element => {
     <>
       <Header back />
       <Container>
-        {!mobile && <Stepper step={3} />}
+        <HiddenMobile>
+          <Stepper step={3} />
+        </HiddenMobile>
 
         <CheckoutView>
-          {!mobile && (
-            <CheckoutImage>
+          <CheckoutImage>
+            <HiddenMobile>
               {imageUrl && <Image src={imageUrl} layout="fill" objectFit="cover" />}
-            </CheckoutImage>
-          )}
+            </HiddenMobile>
+          </CheckoutImage>
 
           <ConfimationDetails>
             <ConfirmationDetailsInfo>
@@ -122,11 +124,12 @@ const Checkout = (): JSX.Element => {
 
               <DetailPaymentBox>
                 <DescriptionBox>
-                  {mobile && (
-                    <MobileCheckoutImage>
+                  <MobileCheckoutImage>
+                    <HiddenDesktop>
                       {imageUrl && <Image src={imageUrl} layout="fill" objectFit="cover" />}
-                    </MobileCheckoutImage>
-                  )}
+                    </HiddenDesktop>
+                  </MobileCheckoutImage>
+
                   <div>
                     <p>{cartInfo?.description}</p>
                     <CheckoutGrayText>x 1 Green Size 41 Item #2839u512401</CheckoutGrayText>

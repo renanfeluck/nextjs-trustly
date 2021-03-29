@@ -4,7 +4,7 @@ import Container from '@design/Container';
 import styled from 'styled-components';
 import Image from 'next/image';
 import CheckoutPaymentButton from '@app/Checkout/CheckoutPaymentButton';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Button from '@design/Button';
 import { Head } from 'next/document';
 import loadPayWithMyBank from '@helpers/loadPayWithMyBank';
@@ -16,7 +16,8 @@ import CheckoutView from '@app/Checkout/CheckoutView';
 import CheckoutTitle from '@app/Checkout/CheckoutTitle';
 import CheckoutGrayText from '@app/Checkout/CheckoutGrayText';
 import CheckoutPriceText from '@app/Checkout/CheckoutPriceText';
-import isMobile from '@helpers/isMobile';
+import HiddenMobile from '@design/HiddenMobile';
+import HiddenDesktop from '@design/HiddenDesktop';
 
 const PaymentBox = styled.div`
   width: 100%;
@@ -25,11 +26,9 @@ const Checkout = (): JSX.Element => {
   const [paymentMethod, setPaymentMethod] = useState('bank');
   const [cartInfo, setCartInfo] = useState<ProductInfo>();
   const [imageUrl, setImageUrl] = useState();
-  const [mobile, setMobile] = useState(true);
+  const target = useRef();
 
   useEffect(() => {
-    setMobile(isMobile());
-
     const localCartInfo = localStorage.getItem('cart');
 
     if (localCartInfo) {
@@ -43,7 +42,11 @@ const Checkout = (): JSX.Element => {
 
   const pay = e => {
     e.preventDefault();
-    loadPayWithMyBank();
+    if (paymentMethod !== 'bank') {
+      alert('Only banking payment avaliable');
+    } else {
+      loadPayWithMyBank();
+    }
   };
 
   const DeliveryDetails = () => (
@@ -59,32 +62,38 @@ const Checkout = (): JSX.Element => {
   return (
     <>
       <Header back />
-      <Container>
-        {!mobile && <Stepper step={2} />}
+      <Container ref={target}>
+        <HiddenMobile>
+          <Stepper step={2} />
+        </HiddenMobile>
         <CheckoutView>
-          {!mobile && (
-            <CheckoutImage>
+          <CheckoutImage>
+            <HiddenMobile>
               {imageUrl && <Image src={imageUrl} layout="fill" objectFit="cover" />}
-            </CheckoutImage>
-          )}
+            </HiddenMobile>
+          </CheckoutImage>
           <CheckoutDetails>
-            {mobile && (
-              <div>
-                <MobileCheckoutImage>
-                  {imageUrl && <Image src={imageUrl} layout="fill" objectFit="cover" />}
-                </MobileCheckoutImage>
-              </div>
-            )}
+            <HiddenDesktop>
+              <MobileCheckoutImage>
+                {imageUrl && <Image src={imageUrl} layout="fill" objectFit="cover" />}
+              </MobileCheckoutImage>
+            </HiddenDesktop>
             <CheckoutDetailsInfo>
-              {!mobile && <CheckoutTitle>Cart total</CheckoutTitle>}
+              <HiddenMobile>
+                <CheckoutTitle>Cart total</CheckoutTitle>
+              </HiddenMobile>
               <p>{cartInfo?.description}</p>
               <CheckoutGrayText>x 1 Green Size 41 Item #2839u512401</CheckoutGrayText>
 
-              {mobile && <DeliveryDetails />}
+              <HiddenDesktop>
+                <DeliveryDetails />
+              </HiddenDesktop>
             </CheckoutDetailsInfo>
 
             <CheckoutDetailsInfo>
-              {!mobile && <DeliveryDetails />}
+              <HiddenDesktop>
+                <DeliveryDetails />
+              </HiddenDesktop>
               <CheckoutDetails>
                 <div>
                   <p>Total cost</p>
